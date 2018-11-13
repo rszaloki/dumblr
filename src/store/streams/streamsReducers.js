@@ -1,5 +1,5 @@
-import streams from '../defaults/streams.js'
-import { STREAM } from '../actions/actionTypes.js'
+import streams from './streamsDefaults.js'
+import { STREAM } from './streamsActionTypes.js'
 
 export default (state = streams, action) => {
   const makeNew = update => Object.assign({}, state, update)

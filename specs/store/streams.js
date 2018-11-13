@@ -1,17 +1,21 @@
 /* global describe, it, beforeEach, expect */
-import { createStore } from 'redux'
-import reducers from '../../src/store/reducers/index.js'
-import defaultStore from '../../src/store/defaults/index.js'
+import { createStore, combineReducers } from 'redux'
 import {
   addStream,
   deleteStream,
   selectStream
-} from '../../src/store/actions/streams.js'
+} from '../../src/store/streams/streamsActions.js'
+import streamsReducers from '../../src/store/streams/streamsReducers.js'
+import streamsDefaults from '../../src/store/streams/streamsDefaults.js'
 
 let store = null
 
 beforeEach(function () {
-  store = createStore(reducers, defaultStore)
+  store = createStore(combineReducers({
+    streams: streamsReducers
+  }), {
+    streams: streamsDefaults
+  })
 })
 
 describe('user stream', function () {

@@ -1,4 +1,4 @@
-import { STREAM } from './actionTypes.js'
+import { STREAM } from './streamsActionTypes.js'
 
 export const addStream = (stream) => ({
   type: STREAM.ADD,

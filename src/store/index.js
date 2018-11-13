@@ -1,5 +1,9 @@
-import { createStore } from 'redux'
-import reducers from './reducers/index.js'
-import defaultStore from './defaults/index.js'
+import { createStore, combineReducers } from 'redux'
+import streamsReducers from './streams/streamsReducers.js'
+import streamsDefaults from './streams/streamsDefaults.js'
 
-export const store = createStore(reducers, defaultStore)
+export const store = createStore(combineReducers({
+  streams: streamsReducers
+}), {
+  streams: streamsDefaults
+})
