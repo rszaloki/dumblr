@@ -10,3 +10,7 @@ export const deleteStream = (stream) => ({
   stream
 })
 
+export const selectStream = (stream) => ({
+  type: STREAM.SELECT,
+  stream
+})

@@ -1,4 +1,5 @@
 export const STREAM = {
-  'ADD':'ADD_STREAM',
-  'DELETE': 'DELETE_STREAM'
+  'ADD': 'ADD_STREAM',
+  'DELETE': 'DELETE_STREAM',
+  'SELECT': 'SELECT_STREAM'
 }
