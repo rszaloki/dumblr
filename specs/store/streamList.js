@@ -4,21 +4,21 @@ import {
   addStream,
   deleteStream,
   selectStream
-} from '../../src/store/streams/streamsActions.js'
-import streamsReducers from '../../src/store/streams/streamsReducers.js'
-import streamsDefaults from '../../src/store/streams/streamsDefaults.js'
+} from '../../src/store/streamList/streamListActions.js'
+import streamListReducers from '../../src/store/streamList/streamListReducers.js'
+import streamListDefaults from '../../src/store/streamList/streamListDefaults.js'
 
 let store = null
 
 beforeEach(function () {
   store = createStore(combineReducers({
-    streams: streamsReducers
+    streams: streamListReducers
   }), {
-    streams: streamsDefaults
+    streams: streamListDefaults
   })
 })
 
-describe('user stream', function () {
+describe('user stream list', function () {
   it('should have a store', function () {
     expect(store.getState().streams).toEqual({ selectedStream: null, list: [] })
   })

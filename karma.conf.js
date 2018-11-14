@@ -5,7 +5,8 @@ module.exports = function (config) {
        * Make sure to disable Karma’s file watcher
        * because the preprocessor will use its own.
        */
-      {pattern: 'specs/**/*.js', watched: false}
+      { pattern: 'external/libipfs.min.js', watched: false, served: true, included: true },
+      { pattern: 'specs/**/*.js', watched: false }
     ],
     browsers: ['Chrome'],
     preprocessors: {
@@ -17,7 +18,7 @@ module.exports = function (config) {
       terminal: true
     },
     frameworks: ['jasmine'],
-    plugins:[
+    plugins: [
       'karma-jasmine',
       'karma-chrome-launcher',
       'karma-rollup-preprocessor',
@@ -33,7 +34,7 @@ module.exports = function (config) {
         require('rollup-plugin-node-resolve')(),
         require('rollup-plugin-commonjs')(),
         require('rollup-plugin-replace')({
-          'process.env.NODE_ENV': JSON.stringify( 'test' )
+          'process.env.NODE_ENV': JSON.stringify('test')
         }),
         require('rollup-plugin-istanbul')({
           exclude: ['specs/**/*.js']

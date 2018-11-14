@@ -1,16 +1,16 @@
-import { STREAM } from './streamsActionTypes.js'
+import STREAMLIST from './streamListActionTypes.js'
 
 export const addStream = (stream) => ({
-  type: STREAM.ADD,
+  type: STREAMLIST.ADD,
   stream
 })
 
 export const deleteStream = (stream) => ({
-  type: STREAM.DELETE,
+  type: STREAMLIST.DELETE,
   stream
 })
 
 export const selectStream = (stream) => ({
-  type: STREAM.SELECT,
+  type: STREAMLIST.SELECT,
   stream
 })

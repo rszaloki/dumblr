@@ -1,9 +1,10 @@
-import { createStore, combineReducers } from 'redux'
-import streamsReducers from './streams/streamsReducers.js'
-import streamsDefaults from './streams/streamsDefaults.js'
+import { createStore, combineReducers, applyMiddleware } from 'redux'
+import promiseMiddleware from 'redux-promise-middleware'
+import streamListReducers from './streamList/streamListReducers.js'
+import streamListDefaults from './streamList/streamListDefaults.js'
 
 export const store = createStore(combineReducers({
-  streams: streamsReducers
+  streams: streamListReducers
 }), {
-  streams: streamsDefaults
-})
+  streams: streamListDefaults
+}, applyMiddleware(promiseMiddleware()))
