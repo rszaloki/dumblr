@@ -11,6 +11,10 @@ export function generateKey (name) {
   }))
 }
 
+export function removeKey (name) {
+  return ipfs().then(node => node.key.rm(name))
+}
+
 export function exportKey (name, password) {
   return ipfs().then(node => node.key.export(name, password))
 }
