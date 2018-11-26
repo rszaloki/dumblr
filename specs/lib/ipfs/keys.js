@@ -1,56 +1,40 @@
-/* global describe, it, expect */
+/* global describe, it, expect, beforeEach */
 import * as ipfsKeys from '../../../src/lib/ipfs/keys.js'
 import dummyKey from '../../mocks/dummyKey.js'
 
 describe('ipfs key management', function () {
+  beforeEach(async function () {
+    const keys = await ipfsKeys.listKey()
+    for (let keyName of keys.keys()) {
+      if (keyName !== 'self') {
+        await ipfsKeys.removeKey(keyName)
+      }
+    }
+  })
+
   it('should have IPFS on window', function () {
     expect(window.Ipfs).not.toBe(undefined)
   })
 
-  it('should create a new key and delete it', function (done) {
-    let __keys = 0
-    ipfsKeys.listKey().then(keys => {
-      __keys = keys.length
-    }).then(() => ipfsKeys.generateKey('dummy'))
-      .then(() => ipfsKeys.listKey())
-      .then(keys => {
-        expect(keys.length - 1).toEqual(__keys)
-      })
-      .then(() => ipfsKeys.removeKey('dummy'))
-      .then(() => ipfsKeys.listKey())
-      .then(keys => {
-        expect(keys.length).toEqual(__keys)
-        done()
-      }).catch(E => done(E))
+  it('should create a new key and delete it', async function () {
+    const oldKeys = await ipfsKeys.listKey()
+    await ipfsKeys.generateKey('dummy')
+    let newKeys = await ipfsKeys.listKey()
+    expect(newKeys.size).toEqual(oldKeys.size + 1)
+
+    await ipfsKeys.removeKey('dummy')
+    newKeys = await ipfsKeys.listKey()
+    expect(newKeys.size).toEqual(oldKeys.size)
   })
 
-  it('should list keys', function (done) {
-    ipfsKeys.listKey().then(keys => {
-      console.log(keys)
-      expect(keys.length).not.toEqual(0)
-      done()
-    })
+  it('should have an empty list of keys', async function () {
+    let keys = await ipfsKeys.listKey()
+    expect(keys.size).toEqual(1)
   })
 
-  it('should generate a key and export it', function (done) {
-    ipfsKeys.importKey('newdummy', dummyKey, 'nopass')
-      .then(() => ipfsKeys.exportKey('dummy', 'nopass'))
-      .then(result => {
-        expect(result).toEqual(dummyKey)
-        done()
-      })
-  })
-
-  it('should import a dummy key', function (done) {
-    let __keys = 0
-    ipfsKeys.listKey().then(keys => {
-      __keys = keys.length
-    }).then(() => ipfsKeys.importKey('newdummy', dummyKey, 'nopass'))
-      .then(() => ipfsKeys.listKey())
-      .then(keys => {
-        console.log(keys)
-        expect(keys.length - 1).toEqual(__keys)
-        done()
-      })
+  it('should import a key and export it', async function () {
+    await ipfsKeys.importKey('newdummy', dummyKey, 'nopass')
+    const result = await ipfsKeys.exportKey('newdummy', 'nopass')
+    expect(result).toEqual(dummyKey)
   })
 })

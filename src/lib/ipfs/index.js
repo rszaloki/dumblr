@@ -1,14 +1,15 @@
-const IPFS = window.Ipfs
 
 let __node__ = null
 
-export function ipfs () {
+export function IPFS () {
+  const IPFS = window.Ipfs
+
   if (__node__) {
     return __node__
   }
 
   __node__ = new Promise(resolve => {
-    const node = new IPFS({pass:'malacmalacmalacmalacmalac'})
+    const node = new IPFS({ pass: 'malacmalacmalacmalacmalac' })
     node.once('ready', () => {
       console.log('IPFS node ready!')
       resolve(node)

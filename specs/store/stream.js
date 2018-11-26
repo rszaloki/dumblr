@@ -1,4 +1,5 @@
 /* global describe, it, beforeEach, expect */
+/*
 import { openStream } from '../../src/store/stream/streamActions.js'
 import storeFactory from '../../src/store/index.js'
 
@@ -22,3 +23,4 @@ describe('active stream', function () {
     })
   })
 })
+*/
