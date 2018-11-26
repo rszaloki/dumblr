@@ -3,6 +3,5 @@ export default {
   head: null,
   displayName: 'My stream',
   isFetching: false,
-  isInitializing: false,
-  posts: []
+  isInitializing: false
 }

@@ -6,6 +6,8 @@ export default (state = streamDefaults, action) => {
   const makeNew = update => Object.assign({}, state, update)
 
   switch (action.type) {
+    case STREAM.OPEN:
+      return makeNew(action.stream)
     case `${STREAM.INIT}_${PENDING}`:
       return makeNew({
         isInitializing: true
@@ -13,9 +15,9 @@ export default (state = streamDefaults, action) => {
     case `${STREAM.INIT}_${FULFILLED}`:
       return makeNew({
         isInitializing: false,
-        id: action.name,
-        head: action.value,
-        displayName: action.meta.displayName
+        id: action.id,
+        head: action.head,
+        displayName: action.displayName
       })
     case STREAM.ADD_POST:
       break

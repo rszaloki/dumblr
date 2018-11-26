@@ -1,21 +1,15 @@
 /* global describe, it, beforeEach, expect */
-import { createStore, combineReducers } from 'redux'
 import {
   addStream,
   deleteStream,
   selectStream
 } from '../../src/store/streamList/streamListActions.js'
-import streamListReducers from '../../src/store/streamList/streamListReducers.js'
-import streamListDefaults from '../../src/store/streamList/streamListDefaults.js'
+import storeFactory from '../../src/store/index.js'
 
 let store = null
 
 beforeEach(function () {
-  store = createStore(combineReducers({
-    streams: streamListReducers
-  }), {
-    streams: streamListDefaults
-  })
+  store = storeFactory()
 })
 
 describe('user stream list', function () {
