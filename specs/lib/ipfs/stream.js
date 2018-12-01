@@ -1,27 +1,32 @@
-/* global describe, it, expect */
-/*
-import { initStream } from '../../../src/lib/ipfs/streams.js'
-import dummyKey from '../../mocks/dummyKey.js'
-import { importKey, listKey } from '../../../src/lib/ipfs/keys.js'
+/* global describe, it, expect, beforeEach */
 
-describe('stream', function () {
-  it('should be initialized', function (done) {
-    listKey().then(keys => {
-      if (keys.indexOf('dummykey') > -1) {
-        return Promise.resolve()
-      } else {
-        return importKey('dummykey', dummyKey, 'nopass')
-      }
-    })
-      .then(() => initStream('dummykey', 'dummy stream', 1))
-      .then(result => {
-        expect(result).toEqual({
-          displayName: 'dummy stream',
-          head: '/ipfs/QmRVDaZzEbAABSCof8Y3K9X9cy5f9WfPYh6Tnbtv4BvcPq',
-          id: 'QmXNHkfEoA96hzSZsmpEEciGFUnSEsjTF1TpRF6tcXubYJ'
-        })
-        done()
+import dummyKey from '../../mocks/dummyKey.js'
+import { Stream } from '../../../src/lib/ipfs/Stream.js'
+import { Post } from '../../../src/lib/ipfs/Post.js'
+import { importKey, listKey } from '../../../src/lib/ipfs/keys.js'
+import { IPFS } from '../../../src/lib/ipfs/index.js'
+
+describe('stream ', function () {
+  beforeEach(async function () {
+    const keys = await listKey()
+    console.log(`check for dummykey`)
+    if (!keys.has('dummykey')) {
+      console.log(`don't have dummykey, importing!`)
+      await importKey('dummykey', dummyKey, 'nopass')
+    }
+  })
+  it('should create a stream with one post', async function () {
+    const ipfs = await IPFS()
+    const post = new Post(ipfs.types.Buffer.from('hello post!'))
+    const stream = new Stream()
+    const postStat = await post.save()
+    stream.addPost(postStat, 'dummy Post')
+
+    const savedStream = await stream.publish('dummykey')
+    expect(savedStream)
+      .toEqual({
+        name: 'QmXNHkfEoA96hzSZsmpEEciGFUnSEsjTF1TpRF6tcXubYJ',
+        value: '/ipfs/QmXMTtB2psbDqpLPzii76WWiDukK2XbrzNoYawAhQGhLXL'
       })
   })
 })
-*/
