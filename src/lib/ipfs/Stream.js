@@ -27,6 +27,9 @@ export class Stream {
   }
 
   addPost (postInfo, name) {
+    if (!name) {
+      name = postInfo.Hash
+    }
     this[postList].push({
       Name: name,
       Hash: postInfo.Hash,
@@ -75,12 +78,15 @@ export class Stream {
   static async from (cid) {
     const ipfs = await IPFS()
     const newStream = new Stream()
-    return Promise.all([
-      ipfs.object.get(`${cid}`),
-      ipfs.object.get(`${cid}/index`)])
-      .then(([meta, posts]) => {
-        newStream.metaNode = meta
-        newStream.postsNode = posts
-      })
+    const metaDagNode = await ipfs.object.get(cid)
+    newStream.metaDagNode = metaDagNode
+
+    const postsDagNodeLink = metaDagNode.links.find(link => link.name === 'index')
+    if (postsDagNodeLink) {
+      const postsDagNode = await ipfs.object.get(postsDagNodeLink.cid.toString())
+      newStream.postsDagNode = postsDagNode
+    }
+
+    return newStream
   }
 }

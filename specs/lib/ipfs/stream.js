@@ -29,4 +29,9 @@ describe('stream ', function () {
         value: '/ipfs/QmXMTtB2psbDqpLPzii76WWiDukK2XbrzNoYawAhQGhLXL'
       })
   })
+
+  it('should create a stream from ipns cid', async function () {
+    const stream = await Stream.from('QmXMTtB2psbDqpLPzii76WWiDukK2XbrzNoYawAhQGhLXL')
+    console.log(stream)
+  })
 })
